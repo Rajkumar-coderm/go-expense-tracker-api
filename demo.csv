@@ -1,0 +1,26 @@
+title,amount,category,expense_date,type,payment_method
+Milk and Bread,120,Groceries,2026-05-01,Expense,upi
+Movie Night,350,Leisure,2026-05-02,Expense,upi
+Headphones,1500,Electronics,2026-05-03,Expense,upi
+Electric Bill,2200,Utilities,2026-05-04,Expense,upi
+T-Shirt,800,Clothing,2026-05-05,Expense,upi
+Doctor Visit,500,Health,2026-05-06,Expense,upi
+Snacks,200,Groceries,2026-05-07,Expense,upi
+Gym Membership,1200,Health,2026-05-08,Expense,upi
+Mobile Recharge,300,Utilities,2026-05-09,Expense,upi
+Shoes,1800,Clothing,2026-05-10,Income,upi
+Dinner Out,900,Leisure,2026-05-11,Expense,upi
+Laptop Mouse,700,Electronics,2026-05-12,Income,upi
+Water Bill,600,Utilities,2026-05-13,Expense,upi
+Jeans,1500,Clothing,2026-05-14,Income,upi
+Medicines,400,Health,2026-05-15,Income,upi
+Fruits,250,Groceries,2026-05-16,Income,upi
+Netflix Subscription,499,Leisure,2026-05-17,Income,upi
+Keyboard,1200,Electronics,2026-05-18,Expense,upi
+Gas Bill,1100,Utilities,2026-05-19,Expense,upi
+Jacket,2000,Clothing,2026-05-20,Expense,upi
+Invalid Amount,abc,Groceries,2026-05-21,Expense,
+Missing Title,,Leisure,2026-05-22,Expense,
+Invalid Date,500,Health,22-05-2026,Expense,
+Missing Category,300,,2026-05-23,Expense,
+Negative Amount,-100,Utilities,2026-05-24,Expense,
