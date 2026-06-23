@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"github.com/expense-tracker-api/controllers/budgets"
 	"github.com/expense-tracker-api/controllers/expense"
 	"github.com/expense-tracker-api/controllers/users"
 	"github.com/expense-tracker-api/middleware"
@@ -22,5 +23,8 @@ func SetupRoutes(r *gin.Engine) {
 	api.DELETE("/expense/:id", expense.DeleteExpense)
 	api.POST("/expense/import", expense.ImportExpenses)
 	api.GET("/expense/export", expense.ExportExpenses)
+
+	// Budget Routes
+	api.POST("/budget", budgets.CreateNewBudget)
 
 }
