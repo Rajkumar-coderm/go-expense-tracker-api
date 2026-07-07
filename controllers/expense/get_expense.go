@@ -59,6 +59,14 @@ func GetExpense(c *gin.Context) {
 		return
 	}
 
+	if len(expenses) == 0 {
+		c.JSON(http.StatusNoContent, models.CustomResponseModel{
+			Status:  "success",
+			Message: "No expenses found",
+		})
+		return
+	}
+
 	c.JSON(http.StatusOK, models.CustomResponseModel{
 		Status:  "success",
 		Message: "Expenses fetched successfully",

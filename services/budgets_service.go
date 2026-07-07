@@ -27,19 +27,52 @@ func endTimeForPeriod(startDate time.Time, period string) time.Time {
 	startDate = startDate.UTC()
 
 	switch period {
+
 	case "daily":
-		return startDate.AddDate(0, 0, 1).Add(-time.Nanosecond)
+		return time.Date(
+			startDate.Year(),
+			startDate.Month(),
+			startDate.Day(),
+			23, 59, 59, int(time.Second-time.Nanosecond),
+			time.UTC,
+		)
 
 	case "weekly":
-		return startDate.AddDate(0, 0, 7).Add(-time.Nanosecond)
+		daysUntilSunday := (7 - int(startDate.Weekday())) % 7
+		end := startDate.AddDate(0, 0, daysUntilSunday)
+
+		return time.Date(
+			end.Year(),
+			end.Month(),
+			end.Day(),
+			23, 59, 59, int(time.Second-time.Nanosecond),
+			time.UTC,
+		)
 
 	case "monthly":
-		return startDate.AddDate(0, 1, 0).Add(-time.Nanosecond)
+		firstDayNextMonth := time.Date(
+			startDate.Year(),
+			startDate.Month()+1,
+			1,
+			0, 0, 0, 0,
+			time.UTC,
+		)
+		return firstDayNextMonth.Add(-time.Nanosecond)
 
 	case "yearly":
-		return startDate.AddDate(1, 0, 0).Add(-time.Nanosecond)
+		return time.Date(
+			startDate.Year(),
+			time.December,
+			31,
+			23, 59, 59, int(time.Second-time.Nanosecond),
+			time.UTC,
+		)
 
 	default:
 		return startDate
 	}
+}
+
+func GetBudget(req models.GetBudgetsRequestModel) ([]models.BudgetModel, error) {
+	return repository.GetBudget(req)
 }

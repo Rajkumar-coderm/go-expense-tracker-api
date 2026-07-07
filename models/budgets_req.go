@@ -24,8 +24,9 @@ type CreateBudgetRequestModel struct {
 	Period   string  `json:"period" binding:"required,oneof=daily weekly monthly yearly"`
 }
 
-// {
-//   "category": "Groceries",
-//   "amount": 5000,
-//   "period": "monthly"
-// }
+type GetBudgetsRequestModel struct {
+	Page     int    `json:"page,omitempty"`
+	Limit    int    `json:"limit,omitempty"`
+	UserId   string `json:"id,omitempty"`
+	Category string `json:"category,omitempty" binding:"omitempty,oneof=Groceries Leisure Electronics Utilities Clothing Health Others"`
+}

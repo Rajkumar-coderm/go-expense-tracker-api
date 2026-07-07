@@ -26,5 +26,6 @@ func SetupRoutes(r *gin.Engine) {
 
 	// Budget Routes
 	api.POST("/budget", budgets.CreateNewBudget)
+	api.GET("/budget", budgets.GetBudgets)
 
 }
