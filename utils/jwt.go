@@ -1,11 +1,10 @@
-// utils/jwt.go
 package utils
 
 import (
 	"errors"
-	"os"
 	"time"
 
+	"github.com/expense-tracker-api/config"
 	"github.com/golang-jwt/jwt/v5"
 )
 
@@ -16,13 +15,7 @@ type JWTClaims struct {
 	jwt.RegisteredClaims
 }
 
-// GenerateAccessToken creates a production-ready JWT access token
 func GenerateAccessToken(userID, email, role string) (string, error) {
-	secret := os.Getenv("JWT_SECRET")
-	if secret == "" {
-		return "", errors.New("JWT_SECRET is missing in environment")
-	}
-
 	expirationTime := time.Now().Add(24 * time.Hour)
 
 	claims := JWTClaims{
@@ -30,20 +23,47 @@ func GenerateAccessToken(userID, email, role string) (string, error) {
 		Email:  email,
 		Role:   role,
 		RegisteredClaims: jwt.RegisteredClaims{
+			Issuer:    "expense-tracker-api",
+			Subject:   userID,
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 			NotBefore: jwt.NewNumericDate(time.Now()),
-			Issuer:    "expense-tracker-api",
-			Subject:   userID,
 		},
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	signedToken, err := token.SignedString([]byte(secret))
+	return token.SignedString(config.JWTSecret)
+}
+
+func ValidateAccessToken(tokenString string) (*JWTClaims, error) {
+
+	claims := &JWTClaims{}
+
+	token, err := jwt.ParseWithClaims(
+		tokenString,
+		claims,
+		func(token *jwt.Token) (interface{}, error) {
+
+			if token.Method.Alg() != jwt.SigningMethodHS256.Alg() {
+				return nil, errors.New("invalid signing method")
+			}
+
+			return config.JWTSecret, nil
+		},
+	)
+
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return signedToken, nil
+	if !token.Valid {
+		return nil, errors.New("invalid token")
+	}
+
+	if claims.UserID == "" {
+		return nil, errors.New("invalid token claims")
+	}
+
+	return claims, nil
 }

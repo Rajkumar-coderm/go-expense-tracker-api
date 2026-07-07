@@ -8,6 +8,7 @@ import (
 
 func main() {
 	config.LoadEnv()
+	config.LoadJWTSecret()
 	config.ConnectDB()
 	r := gin.New()
 	r.Use(gin.Logger(), gin.Recovery())

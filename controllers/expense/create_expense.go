@@ -27,7 +27,7 @@ func CreateNewExpense(ctx *gin.Context) {
 		})
 		return
 	}
-	userId := ctx.GetString("id")
+	userId := utils.GetUserID(ctx)
 	if strings.TrimSpace(userId) == "" {
 		ctx.JSON(http.StatusUnauthorized, models.CustomResponseModel{
 			Status:  "error",

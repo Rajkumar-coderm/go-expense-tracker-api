@@ -5,6 +5,7 @@ import (
 
 	"github.com/expense-tracker-api/models"
 	"github.com/expense-tracker-api/services"
+	"github.com/expense-tracker-api/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,7 +29,7 @@ func ImportExpenses(c *gin.Context) {
 	}
 	defer f.Close()
 
-	userId := c.GetString("id")
+	userId := utils.GetUserID(c)
 
 	result, err := services.ImportExpenses(userId, f)
 	if err != nil {

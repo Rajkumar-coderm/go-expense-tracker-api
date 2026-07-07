@@ -1,18 +1,21 @@
 package users
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/expense-tracker-api/models"
 	"github.com/expense-tracker-api/services"
+	"github.com/expense-tracker-api/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func GetUserById(c *gin.Context) {
-	fmt.Println(c.Get("id"))
 	id := c.Query("id")
+
+	if strings.TrimSpace(id) == "" {
+		id = utils.GetUserID(c)
+	}
 
 	if strings.TrimSpace(id) == "" {
 		c.JSON(http.StatusBadRequest, models.CustomResponseModel{

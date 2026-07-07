@@ -32,7 +32,7 @@ func GetExpense(c *gin.Context) {
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
 	typeFilter := c.DefaultQuery("type", "Expense")
-	userId := c.GetString("id")
+	userId := utils.GetUserID(c)
 
 	if typeFilter != "" && typeFilter != "Expense" && typeFilter != "Income" {
 		c.JSON(http.StatusBadRequest, models.CustomResponseModel{

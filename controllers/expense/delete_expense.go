@@ -12,7 +12,7 @@ import (
 )
 
 func DeleteExpense(ctx *gin.Context) {
-	userId := ctx.GetString("id")
+	userId := utils.GetUserID(ctx)
 	expenseId := ctx.Param("id")
 	if strings.TrimSpace(expenseId) == "" {
 		ctx.JSON(http.StatusBadRequest, models.CustomResponseModel{

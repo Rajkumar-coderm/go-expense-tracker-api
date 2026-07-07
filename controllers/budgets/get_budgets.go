@@ -5,11 +5,12 @@ import (
 
 	"github.com/expense-tracker-api/models"
 	"github.com/expense-tracker-api/services"
+	"github.com/expense-tracker-api/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func GetBudgets(ctx *gin.Context) {
-	userId := ctx.GetString("id")
+	userId := utils.GetUserID(ctx)
 	if userId == "" {
 		ctx.JSON(401, gin.H{"error": "Unauthorized: User ID is missing"})
 		return
